@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Just a List of Salaries</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <ol id="salaries"></ol>
+</body>
+
+<script>
+  const salaries = [{ "salary": 40000 }, { "salary": 50000 }, { "salary": 50000 }, { "salary": 50000 }, { "salary": 60000 }, { "salary": 60000 }, { "salary": 60000 }, { "salary": 60000 }, { "salary": 60000 }, { "salary": 60000 }, { "salary": 60000 }, { "salary": 60000 }, { "salary": 60000 }, { "salary": 60000 }, { "salary": 70000 }, { "salary": 70000 }, { "salary": 70000 }, { "salary": 70000 }, { "salary": 70000 }, { "salary": 70000 }, { "salary": 70000 }, { "salary": 70000 }, { "salary": 70000 }, { "salary": 70000 }, { "salary": 70000 }, { "salary": 80000 }, { "salary": 80000 }, { "salary": 80000 }, { "salary": 80000 }, { "salary": 80000 }, { "salary": 80000 }, { "salary": 80000 }, { "salary": 80000 }, { "salary": 80000 }, { "salary": 90000 }, { "salary": 90000 }, { "salary": 90000 }, { "salary": 90000 }, { "salary": 90000 }, { "salary": 90000 }, { "salary": 100000 }, { "salary": 100000 }, { "salary": 100000 }, { "salary": 100000 }, { "salary": 100000 }, { "salary": 100000 }, { "salary": 100000 }, { "salary": 100000 }, { "salary": 100000 }, { "salary": 110000 }, { "salary": 110000 }, { "salary": 110000 }, { "salary": 110000 }, { "salary": 110000 }, { "salary": 110000 }, { "salary": 110000 }, { "salary": 110000 }, { "salary": 110000 }, { "salary": 110000 }, { "salary": 110000 }, { "salary": 120000 }, { "salary": 120000 }, { "salary": 120000 }, { "salary": 120000 }, { "salary": 120000 }, { "salary": 120000 }, { "salary": 130000 }, { "salary": 130000 }, { "salary": 130000 }, { "salary": 130000 }, { "salary": 140000 }, { "salary": 140000 }, { "salary": 140000 }, { "salary": 140000 }, { "salary": 140000 }, { "salary": 150000 }, { "salary": 160000 }, { "salary": 160000 }, { "salary": 170000 }, { "salary": 170000 }, { "salary": 180000 }]
+  const orderedList = document.querySelector('#salaries')
+  salaries.forEach((entry) => {
+    orderedList.innerHTML += `<li>${entry.salary}</li>`
+  })
+</script>
+
+</html>
