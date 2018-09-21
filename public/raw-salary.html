@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Raw Salary Ranges</title>
+</head>
+<body>
+  <canvas id="salarychart" width="400" height="400"></canvas>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+   <script>
+    const salaryJSON = [{"salary":40000},{"salary":50000},{"salary":50000},{"salary":50000},{"salary":60000},{"salary":60000},{"salary":60000},{"salary":60000},{"salary":60000},{"salary":60000},{"salary":60000},{"salary":60000},{"salary":60000},{"salary":60000},{"salary":70000},{"salary":70000},{"salary":70000},{"salary":70000},{"salary":70000},{"salary":70000},{"salary":70000},{"salary":70000},{"salary":70000},{"salary":70000},{"salary":70000},{"salary":80000},{"salary":80000},{"salary":80000},{"salary":80000},{"salary":80000},{"salary":80000},{"salary":80000},{"salary":80000},{"salary":80000},{"salary":90000},{"salary":90000},{"salary":90000},{"salary":90000},{"salary":90000},{"salary":90000},{"salary":100000},{"salary":100000},{"salary":100000},{"salary":100000},{"salary":100000},{"salary":100000},{"salary":100000},{"salary":100000},{"salary":100000},{"salary":110000},{"salary":110000},{"salary":110000},{"salary":110000},{"salary":110000},{"salary":110000},{"salary":110000},{"salary":110000},{"salary":110000},{"salary":110000},{"salary":110000},{"salary":120000},{"salary":120000},{"salary":120000},{"salary":120000},{"salary":120000},{"salary":120000},{"salary":130000},{"salary":130000},{"salary":130000},{"salary":130000},{"salary":140000},{"salary":140000},{"salary":140000},{"salary":140000},{"salary":140000},{"salary":150000},{"salary":160000},{"salary":160000},{"salary":170000},{"salary":170000},{"salary":180000}]
+
+    console.log(salaryJSON)
+
+    var chartHTML = document.getElementById('salarychart')
+
+    var data = salaryJSON.map(salary => salary.salary)
+    
+    console.log(data)
+
+    var frequency = []
+
+    for ( var i = 0; i < data.length; i++ ) {
+      var prev
+        if ( data[i] !== prev ) {
+            frequency.push(1);
+        } else {
+            frequency[frequency.length-1]++;
+        }
+        prev = data[i];
+    }
+
+    console.log(frequency)
+
+    var labels = data.filter((value, index, self) => self.indexOf(value) === index)
+
+    console.log(labels)
+
+    function getRandomColor () {
+      const r = (Math.floor(Math.random() * 156) + 90)
+      const g = (Math.floor(Math.random() * 156) + 90)
+      const b = (Math.floor(Math.random() * 156) + 90)
+
+      return 'rgb(' + r + ',' + g + ',' + b + ')'
+    }
+
+    var backgroundColor = labels.map(function (color) {
+      return getRandomColor()
+    })
+
+    console.log(backgroundColor)
+
+    var borderColor = labels.map(function (color) {
+      return getRandomColor()
+    })
+
+    console.log(borderColor)
+
+    var salarychart = new Chart(chartHTML, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Salary',
+          data: frequency,
+          backgroundColor,
+          borderColor,
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        },
+        legend: {
+          display: false
+        }
+      }
+    })
+  </script>
+</body>
+</html>
