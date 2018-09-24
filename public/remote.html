@@ -22,32 +22,20 @@
     const remoteFalse = []
 
     for (let i = 0; i < salaryJSON.length; i++) {
-			if (salaryJSON[i].remote == true) {
+			if (salaryJSON[i].remote) {
       	remoteTrue.push(salaryJSON[i].salary)
       } else {
       	remoteFalse.push(salaryJSON[i].salary)
       }
 		}
 
-    const frequency = []
+    const frequency = labels.map(label =>
+      remoteFalse.reduce((n, val) => n + (val === label), 0)
+    )
 
-    for (let i = 0; i < labels.length; i++) {
-      const num = labels[i]
-      const count = remoteFalse.reduce(function(n, val) {
-        return n + (val === num);
-      }, 0);
-      frequency.push(count)
-    }
-
-    const remoteFrequency = []
-
-    for (let i = 0; i < labels.length; i++) {
-      const num = labels[i]
-      const count = remoteTrue.reduce(function(n, val) {
-        return n + (val === num);
-      }, 0);
-      remoteFrequency.push(count)
-    }
+    const remoteFrequency = labels.map(label =>
+      remoteTrue.reduce((n, val) => n + (val === label), 0)
+    )
 
     function getRandomColor () {
       const r = (Math.floor(Math.random() * 156) + 90)
@@ -80,7 +68,7 @@
         scales: {
             yAxes: [{
                 ticks: {
-                    beginAtZero: true
+                  beginAtZero: true
                 }
             }]
         },
