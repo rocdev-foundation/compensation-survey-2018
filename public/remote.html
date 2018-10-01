@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Remote Salary Ranges</title>
 </head>
+
 <body>
   <canvas id="salarychart" width="400" height="200"></canvas>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
-   <script>
+  <script>
     const salaryJSON = [{"salary":40000,"remote":false},{"salary":50000,"remote":false},{"salary":50000,"remote":true},{"salary":50000,"remote":false},{"salary":60000,"remote":false},{"salary":60000,"remote":false},{"salary":60000,"remote":false},{"salary":60000,"remote":false},{"salary":60000,"remote":false},{"salary":60000,"remote":false},{"salary":60000,"remote":false},{"salary":60000,"remote":false},{"salary":60000,"remote":false},{"salary":60000,"remote":false},{"salary":70000,"remote":false},{"salary":70000,"remote":false},{"salary":70000,"remote":false},{"salary":70000,"remote":false},{"salary":70000,"remote":false},{"salary":70000,"remote":false},{"salary":70000,"remote":false},{"salary":70000,"remote":false},{"salary":70000,"remote":false},{"salary":70000,"remote":false},{"salary":70000,"remote":false},{"salary":80000,"remote":false},{"salary":80000,"remote":true},{"salary":80000,"remote":false},{"salary":80000,"remote":true},{"salary":80000,"remote":false},{"salary":80000,"remote":false},{"salary":80000,"remote":false},{"salary":80000,"remote":false},{"salary":80000,"remote":false},{"salary":90000,"remote":false},{"salary":90000,"remote":false},{"salary":90000,"remote":false},{"salary":90000,"remote":true},{"salary":90000,"remote":false},{"salary":90000,"remote":false},{"salary":100000,"remote":false},{"salary":100000,"remote":false},{"salary":100000,"remote":false},{"salary":100000,"remote":true},{"salary":100000,"remote":false},{"salary":100000,"remote":true},{"salary":100000,"remote":true},{"salary":100000,"remote":true},{"salary":100000,"remote":false},{"salary":110000,"remote":false},{"salary":110000,"remote":false},{"salary":110000,"remote":false},{"salary":110000,"remote":true},{"salary":110000,"remote":false},{"salary":110000,"remote":false},{"salary":110000,"remote":true},{"salary":110000,"remote":false},{"salary":110000,"remote":true},{"salary":110000,"remote":true},{"salary":110000,"remote":false},{"salary":120000,"remote":false},{"salary":120000,"remote":false},{"salary":120000,"remote":true},{"salary":120000,"remote":true},{"salary":120000,"remote":true},{"salary":120000,"remote":true},{"salary":130000,"remote":false},{"salary":130000,"remote":false},{"salary":130000,"remote":false},{"salary":130000,"remote":true},{"salary":140000,"remote":true},{"salary":140000,"remote":false},{"salary":140000,"remote":false},{"salary":140000,"remote":true},{"salary":140000,"remote":true},{"salary":150000,"remote":true},{"salary":160000,"remote":true},{"salary":160000,"remote":true},{"salary":170000,"remote":true},{"salary":170000,"remote":true},{"salary":180000,"remote":true}]
 
     const chartHTML = document.getElementById('salarychart')
@@ -18,16 +20,16 @@
 
     const labels = data.filter((value, index, self) => self.indexOf(value) === index)
 
-		const remoteTrue = []
+    const remoteTrue = []
     const remoteFalse = []
 
     for (let i = 0; i < salaryJSON.length; i++) {
-	    if (salaryJSON[i].remote) {
-      	remoteTrue.push(salaryJSON[i].salary)
+      if (salaryJSON[i].remote) {
+        remoteTrue.push(salaryJSON[i].salary)
       } else {
-      	remoteFalse.push(salaryJSON[i].salary)
+        remoteFalse.push(salaryJSON[i].salary)
       }
-		}
+    }
 
     const frequency = labels.map(label =>
       remoteFalse.reduce((n, val) => n + (val === label), 0)
@@ -37,7 +39,7 @@
       remoteTrue.reduce((n, val) => n + (val === label), 0)
     )
 
-    function getRandomColor () {
+    function getRandomColor() {
       const r = (Math.floor(Math.random() * 156) + 90)
       const g = (Math.floor(Math.random() * 156) + 90)
       const b = (Math.floor(Math.random() * 156) + 90)
@@ -50,27 +52,28 @@
       data: {
         labels,
         datasets: [{
-          label: 'Local Salary',
-          data: frequency,
-          backgroundColor: getRandomColor(),
-          borderColor: getRandomColor(),
-          borderWidth: 1
-        },
-        {
-          label: 'Remote Salary',
-          data: remoteFrequency,
-          backgroundColor: getRandomColor(),
-          borderColor: getRandomColor(),
-          borderWidth: 1
-        }]
+            label: 'Local Salary',
+            data: frequency,
+            backgroundColor: getRandomColor(),
+            borderColor: getRandomColor(),
+            borderWidth: 1
+          },
+          {
+            label: 'Remote Salary',
+            data: remoteFrequency,
+            backgroundColor: getRandomColor(),
+            borderColor: getRandomColor(),
+            borderWidth: 1
+          }
+        ]
       },
       options: {
         scales: {
-            yAxes: [{
-                ticks: {
-                  beginAtZero: true
-                }
-            }]
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
         },
         legend: {
           display: true
@@ -79,4 +82,5 @@
     })
   </script>
 </body>
+
 </html>
