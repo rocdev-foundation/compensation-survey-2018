@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Salary by Gender Chart</title>
+</head>
+
+<body>
+  <canvas id="salarychart" width="400" height="200"></canvas>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+  <script>
+    const salaryJSON = [{"salary":40000,"gender":"Male"},{"salary":50000,"gender":"Female"},{"salary":50000,"gender":"Female"},{"salary":50000,"gender":"Male"},{"salary":60000,"gender":"Female"},{"salary":60000,"gender":"Male"},{"salary":60000,"gender":"Male"},{"salary":60000,"gender":"Male"},{"salary":60000,"gender":"Male"},{"salary":60000,"gender":"Male"},{"salary":60000,"gender":"Male"},{"salary":60000,"gender":"Male"},{"salary":60000,"gender":"Male"},{"salary":60000,"gender":"Female"},{"salary":70000,"gender":"Male"},{"salary":70000,"gender":"Male"},{"salary":70000,"gender":"Female"},{"salary":70000,"gender":"Female"},{"salary":70000,"gender":"Male"},{"salary":70000,"gender":"Male"},{"salary":70000,"gender":"Female"},{"salary":70000,"gender":"Male"},{"salary":70000,"gender":"Male"},{"salary":70000,"gender":"Male"},{"salary":70000,"gender":"Female"},{"salary":80000,"gender":"Male"},{"salary":80000,"gender":"Female"},{"salary":80000,"gender":"Male"},{"salary":80000,"gender":"Male"},{"salary":80000,"gender":"Female"},{"salary":80000,"gender":"Male"},{"salary":80000,"gender":"Male"},{"salary":80000,"gender":"Male"},{"salary":80000,"gender":"Female"},{"salary":90000,"gender":"Male"},{"salary":90000,"gender":"Male"},{"salary":90000,"gender":"Male"},{"salary":90000,"gender":"Male"},{"salary":90000,"gender":"Male"},{"salary":90000,"gender":"Male"},{"salary":100000,"gender":"Male"},{"salary":100000,"gender":"Female"},{"salary":100000,"gender":"Male"},{"salary":100000,"gender":"Male"},{"salary":100000,"gender":"Male"},{"salary":100000,"gender":"Male"},{"salary":100000,"gender":"Male"},{"salary":100000,"gender":"Male"},{"salary":100000,"gender":"Male"},{"salary":110000,"gender":"Male"},{"salary":110000,"gender":"Male"},{"salary":110000,"gender":"Male"},{"salary":110000,"gender":"Male"},{"salary":110000,"gender":"Prefer not to say"},{"salary":110000,"gender":"Male"},{"salary":110000,"gender":"Male"},{"salary":110000,"gender":"Male"},{"salary":110000,"gender":"Male"},{"salary":110000,"gender":"Male"},{"salary":110000,"gender":"Male"},{"salary":120000,"gender":"Male"},{"salary":120000,"gender":"Male"},{"salary":120000,"gender":"Male"},{"salary":120000,"gender":"Male"},{"salary":120000,"gender":"Male"},{"salary":120000,"gender":"Female"},{"salary":130000,"gender":"Male"},{"salary":130000,"gender":"Male"},{"salary":130000,"gender":"Male"},{"salary":130000,"gender":"Male"},{"salary":140000,"gender":"Male"},{"salary":140000,"gender":"Male"},{"salary":140000,"gender":"Male"},{"salary":140000,"gender":"Male"},{"salary":140000,"gender":"Male"},{"salary":150000,"gender":"Male"},{"salary":160000,"gender":"Male"},{"salary":160000,"gender":"Male"},{"salary":170000,"gender":"Male"},{"salary":170000,"gender":"Male"},{"salary":180000,"gender":"Male"}]
+
+    const chartHTML = document.getElementById('salarychart')
+
+    const data = salaryJSON.map(salary => salary.salary)
+
+    const labels = data.filter((value, index, self) => self.indexOf(value) === index)
+
+    const male = []
+    const female = []
+    const other = []
+
+    for (let i = 0; i < salaryJSON.length; i++) {
+      if (salaryJSON[i].gender === "Male") {
+        male.push(salaryJSON[i].salary)
+      } else if (salaryJSON[i].gender === "Female") {
+        female.push(salaryJSON[i].salary)
+      } else {
+        other.push(salaryJSON[i].salary)
+      }
+    }
+
+    const maleFrequency = labels.map(label =>
+      male.reduce((n, val) => n + (val === label), 0)
+    )
+
+    const femaleFrequency = labels.map(label =>
+      female.reduce((n, val) => n + (val === label), 0)
+    )
+
+    const otherFrequency = labels.map(label =>
+      other.reduce((n, val) => n + (val === label), 0)
+    )
+
+    function getRandomColor() {
+      const r = (Math.floor(Math.random() * 156) + 90)
+      const g = (Math.floor(Math.random() * 156) + 90)
+      const b = (Math.floor(Math.random() * 156) + 90)
+
+      return 'rgb(' + r + ',' + g + ',' + b + ')'
+    }
+
+    const salarychart = new Chart(chartHTML, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+            label: 'Male',
+            data: maleFrequency,
+            backgroundColor: getRandomColor(),
+            borderColor: getRandomColor(),
+            borderWidth: 1
+          },
+          {
+            label: 'Female',
+            data: femaleFrequency,
+            backgroundColor: getRandomColor(),
+            borderColor: getRandomColor(),
+            borderWidth: 1
+          }, 
+          {
+            label: 'Other',
+            data: otherFrequency,
+            backgroundColor: getRandomColor(),
+            borderColor: getRandomColor(),
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        },
+        legend: {
+          display: true
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
