@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Salary By Years of Experience</title>
+</head>
+
+<body>
+  <canvas id="salarychart" width="400" height="200"></canvas>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+  <script>
+    const salaryJSON = [{"salary":40000,"race":"White or European descent"},{"salary":50000,"race":"South Asian or Indian"},{"salary":50000,"race":"White or European descent"},{"salary":50000,"race":"White or European descent"},{"salary":60000,"race":"White or European descent"},{"salary":60000,"race":"White or European descent"},{"salary":60000,"race":"East Asian"},{"salary":60000,"race":"White or European descent"},{"salary":60000,"race":null},{"salary":60000,"race":"White or European descent"},{"salary":60000,"race":"Latino\/a or Hispanic"},{"salary":60000,"race":"White or European descent"},{"salary":60000,"race":"White or European descent"},{"salary":60000,"race":"White or European descent"},{"salary":70000,"race":"White or European descent"},{"salary":70000,"race":"Prefer not to say"},{"salary":70000,"race":"White or European descent"},{"salary":70000,"race":"White or European descent"},{"salary":70000,"race":"White or European descent"},{"salary":70000,"race":"White or European descent"},{"salary":70000,"race":"White or European descent"},{"salary":70000,"race":"White or European descent"},{"salary":70000,"race":"White or European descent"},{"salary":70000,"race":"White or European descent"},{"salary":70000,"race":"White or European descent"},{"salary":80000,"race":"White or European descent"},{"salary":80000,"race":"White or European descent"},{"salary":80000,"race":"White or European descent"},{"salary":80000,"race":"White or European descent"},{"salary":80000,"race":"White or European descent"},{"salary":80000,"race":"White or European descent"},{"salary":80000,"race":"White or European descent"},{"salary":80000,"race":"White or European descent"},{"salary":80000,"race":"White or European descent"},{"salary":90000,"race":"White or European descent"},{"salary":90000,"race":"White or European descent"},{"salary":90000,"race":"White or European descent"},{"salary":90000,"race":"White or European descent"},{"salary":90000,"race":"White or European descent"},{"salary":90000,"race":"White or European descent"},{"salary":100000,"race":"White or European descent"},{"salary":100000,"race":"Latino\/a or Hispanic"},{"salary":100000,"race":"White or European descent"},{"salary":100000,"race":"White or European descent"},{"salary":100000,"race":"White or European descent"},{"salary":100000,"race":"White or European descent"},{"salary":100000,"race":"White or European descent"},{"salary":100000,"race":"White or European descent"},{"salary":100000,"race":"White or European descent"},{"salary":110000,"race":"White or European descent"},{"salary":110000,"race":"White or European descent"},{"salary":110000,"race":"East Asian, White or European descent"},{"salary":110000,"race":"White or European descent"},{"salary":110000,"race":"Prefer not to say"},{"salary":110000,"race":"White or European descent"},{"salary":110000,"race":"White or European descent"},{"salary":110000,"race":"White or European descent"},{"salary":110000,"race":"White or European descent"},{"salary":110000,"race":"White or European descent"},{"salary":110000,"race":"White or European descent"},{"salary":120000,"race":"Latino\/a or Hispanic, White or European descent"},{"salary":120000,"race":"White or European descent"},{"salary":120000,"race":"White or European descent"},{"salary":120000,"race":"White or European descent"},{"salary":120000,"race":"White or European descent"},{"salary":120000,"race":"East Asian, White or European descent"},{"salary":130000,"race":"White or European descent"},{"salary":130000,"race":"White or European descent"},{"salary":130000,"race":"White or European descent"},{"salary":130000,"race":"White or European descent"},{"salary":140000,"race":"White or European descent"},{"salary":140000,"race":"White or European descent"},{"salary":140000,"race":"White or European descent"},{"salary":140000,"race":"White or European descent"},{"salary":140000,"race":"White or European descent"},{"salary":150000,"race":"White or European descent"},{"salary":160000,"race":"White or European descent"},{"salary":160000,"race":"White or European descent"},{"salary":170000,"race":"White or European descent"},{"salary":170000,"race":"Latino\/a or Hispanic, White or European descent"},{"salary":180000,"race":"White or European descent"}]
+
+    const chartHTML = document.getElementById('salarychart')
+
+    const data = salaryJSON.map(salary => salary.salary)
+
+    const labels = data.filter((value, index, self) => self.indexOf(value) === index)
+
+    const white = []
+    const nonwhite = []
+    const mixed = []
+
+    for (let i = 0; i < salaryJSON.length; i++) {
+      if (salaryJSON[i].race === "White or European descent") {
+        white.push(salaryJSON[i].salary)
+      } else if (["East Asian","South Asian or Indian","Latino\/a or Hispanic"].includes(salaryJSON[i].race) ) {
+        nonwhite.push(salaryJSON[i].salary)
+      } else {
+        mixed.push(salaryJSON[i].salary)
+      }
+    }
+
+    const whiteFrequency = labels.map(label =>
+      white.reduce((n, val) => n + (val === label), 0)
+    )
+
+    const nonwhiteFrequency = labels.map(label =>
+      nonwhite.reduce((n, val) => n + (val === label), 0)
+    )
+
+    const mixedFrequency = labels.map(label =>
+      mixed.reduce((n, val) => n + (val === label), 0)
+    )
+
+    console.log(whiteFrequency)
+    console.log(nonwhiteFrequency)
+    console.log(mixedFrequency)
+
+    function getRandomColor() {
+      const r = (Math.floor(Math.random() * 156) + 90)
+      const g = (Math.floor(Math.random() * 156) + 90)
+      const b = (Math.floor(Math.random() * 156) + 90)
+
+      return 'rgb(' + r + ',' + g + ',' + b + ')'
+    }
+
+    const salarychart = new Chart(chartHTML, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+            label: 'White or European Descent',
+            data: whiteFrequency,
+            backgroundColor: getRandomColor(),
+            borderColor: getRandomColor(),
+            borderWidth: 1
+          },
+          {
+            label: 'Mixed Race or Other',
+            data: mixedFrequency,
+            backgroundColor: getRandomColor(),
+            borderColor: getRandomColor(),
+            borderWidth: 1
+          },
+          {
+            label: 'Non-White',
+            data: nonwhiteFrequency,
+            backgroundColor: getRandomColor(),
+            borderColor: getRandomColor(),
+            borderWidth: 1
+          }
+        ]
+      },
+    options: {
+      scales: {
+        xAxes: [{
+          stacked: true
+        }],
+        yAxes: [{
+          stacked: true
+        }]
+      },
+      legend: {
+          display: true
+      }
+    }
+  })
+  </script>
+</body>
+
+</html>
